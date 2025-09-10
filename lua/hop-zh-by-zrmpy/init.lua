@@ -1,6 +1,6 @@
 local jump_target = require'hop.jump_target'
 local hop = require'hop'
-local flypy_table = require'hop-zh-by-flypy.flypy_table'
+local zrmpy_table = require'hop-zh-by-zrmpy.zrmpy_table'
 local hint = require'hop.hint'
 
 local M = {}
@@ -43,48 +43,48 @@ end
 
 local function create_commands()
     local command = vim.api.nvim_create_user_command
-    command("HopFlypy1", function()
+    command("HopZrmpy1", function()
         M.hint_char1()
     end, {})
-    command("HopFlypy1BC", function()
+    command("HopZrmpy1BC", function()
         M.hint_char1({ direction = hint.HintDirection.BEFORE_CURSOR })
     end, {})
-    command("HopFlypy1AC", function()
+    command("HopZrmpy1AC", function()
         M.hint_char1({ direction = hint.HintDirection.AFTER_CURSOR })
     end, {})
-    command("HopFlypy1CurrentLine", function()
+    command("HopZrmpy1CurrentLine", function()
         M.hint_char1({ current_line_only = true })
     end, {})
-    command("HopFlypy1CurrentLineBC", function()
+    command("HopZrmpy1CurrentLineBC", function()
         M.hint_char1({ direction = hint.HintDirection.BEFORE_CURSOR, current_line_only = true })
     end, {})
-    command("HopFlypy1CurrentLineAC", function()
+    command("HopZrmpy1CurrentLineAC", function()
         M.hint_char1({ direction = hint.HintDirection.AFTER_CURSOR, current_line_only = true })
     end, {})
-    command("HopFlypy1MW", function()
+    command("HopZrmpy1MW", function()
         M.hint_char1({ multi_windows = true })
     end, {})
 
     -- The jump-to-char-2 command.
-    command("HopFlypy2", function()
+    command("HopZrmpy2", function()
         M.hint_char2()
     end, {})
-    command("HopFlypy2BC", function()
+    command("HopZrmpy2BC", function()
         M.hint_char2({ direction = hint.HintDirection.BEFORE_CURSOR })
     end, {})
-    command("HopFlypy2AC", function()
+    command("HopZrmpy2AC", function()
         M.hint_char2({ direction = hint.HintDirection.AFTER_CURSOR })
     end, {})
-    command("HopFlypy2CurrentLine", function()
+    command("HopZrmpy2CurrentLine", function()
         M.hint_char2({ current_line_only = true })
     end, {})
-    command("HopFlypy2CurrentLineBC", function()
+    command("HopZrmpy2CurrentLineBC", function()
         M.hint_char2({ direction = hint.HintDirection.BEFORE_CURSOR, current_line_only = true })
     end, {})
-    command("HopFlypy2CurrentLineAC", function()
+    command("HopZrmpy2CurrentLineAC", function()
         M.hint_char2({ direction = hint.HintDirection.AFTER_CURSOR, current_line_only = true })
     end, {})
-    command("HopFlypy2MW", function()
+    command("HopZrmpy2MW", function()
         M.hint_char2({ multi_windows = true })
     end, {})
 end
@@ -105,7 +105,7 @@ function M.hint_char1(opts)
     end
 
     local c = vim.fn.nr2char(char_code)
-    local pat = flypy_table.char1pattern[c]
+    local pat = zrmpy_table.char1pattern[c]
     local plain_text = false
     if not pat then
         plain_text = true
@@ -140,13 +140,13 @@ function M.hint_char2(opts)
     -- behavior as hint_char1()
     if opts.char2_fallback_key == nil or
         char2 ~= vim.api.nvim_replace_termcodes(opts.char2_fallback_key, true, false, true) then
-        pattern = flypy_table.char2pattern[char1..char2]
+        pattern = zrmpy_table.char2pattern[char1..char2]
         if not pattern then
             plain_text = true
             pattern = char1..char2
         end
     else
-        pattern = flypy_table.char1pattern[char1]
+        pattern = zrmpy_table.char1pattern[char1]
         if not pattern then
             plain_text = true
             pattern = char1
